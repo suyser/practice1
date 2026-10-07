@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Повторяем HTML</title>
+<title>Семантические теги HTML</title>
 <style>
 :root{--bg:#f6f7fb;--card:#fff;--tx:#1c2033;--mut:#667;--ac:#4f46e5;--ok:#16a34a;--bad:#dc2626;--bd:#dfe2ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12141f;--card:#1c1f2f;--tx:#eceefa;--mut:#9aa0bd;--ac:#8b85ff;--ok:#4ade80;--bad:#f87171;--bd:#2f3350}}
@@ -13,9 +13,10 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .w{max-width:860px;margin:0 auto;padding:20px 16px 48px}
 h1{margin:0 0 4px;font-size:1.7rem}
+h2{font-size:1.2rem;margin:20px 0 8px}
 .sub{color:var(--mut);margin:0 0 16px}
-.tabs{display:flex;gap:8px;margin-bottom:16px}
-.tabs button{flex:1;padding:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;font-weight:600;cursor:pointer}
+.tabs{display:flex;gap:6px;margin-bottom:16px}
+.tabs button{flex:1;padding:10px 4px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;font-weight:600;cursor:pointer;font-size:.95rem}
 .tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:14px}
 .q{font-weight:600;margin:0 0 10px}
@@ -25,6 +26,7 @@ h1{margin:0 0 4px;font-size:1.7rem}
 .opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,transparent)}
 .exp{font-size:.92rem;color:var(--mut);margin:8px 0 0}
 code{background:color-mix(in srgb,var(--ac) 14%,transparent);padding:1px 5px;border-radius:5px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+pre{margin:8px 0;padding:10px;border-radius:9px;background:var(--bg);border:1px solid var(--bd);overflow-x:auto;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace}
 .res{text-align:center;font-size:1.2rem;font-weight:700}
 .btn{padding:10px 16px;border:0;border-radius:10px;background:var(--ac);color:#fff;font:inherit;font-weight:600;cursor:pointer}
 .btn.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}
@@ -39,34 +41,91 @@ iframe{width:100%;height:170px;border:1px solid var(--bd);border-radius:10px;bac
 .hide{display:none}
 .bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:14px}
 .bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+.demo{padding:8px 10px;border-radius:9px;background:var(--bg);border:1px dashed var(--bd)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.g2{grid-template-columns:1fr}}
+.lay{display:grid;gap:6px;font-size:.9rem;text-align:center}
+.lay div{padding:8px;border:2px solid var(--ac);border-radius:8px;background:color-mix(in srgb,var(--ac) 10%,transparent)}
+.lay .mid{display:grid;grid-template-columns:2fr 1fr;gap:6px;border:2px dashed var(--ac)}
+.lay .mid div{background:var(--card)}
 </style>
 </head>
 <body>
 <div class="w">
-<h1>Повторяем HTML 🚀</h1>
-<p class="sub">Тест и практика перед переходом к CSS</p>
-<div class="tabs"><button id="t1" class="on">📝 Мини-тест</button><button id="t2">💻 Практика</button></div>
+<h1>Семантические теги HTML 🚀</h1>
+<p class="sub">Теория, тест и практика по семантике</p>
+<div class="tabs"><button id="t0" class="on">📖 Теория</button><button id="t1">📝 Тест</button><button id="t2">💻 Практика</button></div>
 
-<section id="test"><div class="bar"><i id="pb"></i></div><div id="qs"></div><div id="res" class="card res hide"></div></section>
+<section id="theory"></section>
+<section id="test" class="hide"><div class="bar"><i id="pb"></i></div><div id="qs"></div><div id="res" class="card res hide"></div></section>
 <section id="prac" class="hide"></section>
 </div>
 
 <script>
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const $=id=>document.getElementById(id);
+
+/* ---------- ТЕОРИЯ: только семантика ---------- */
+const T0=$("theory");
+T0.innerHTML=`
+<h2>Новая тема: семантические теги</h2>
+<div class="card">
+<p><b>Семантика</b> — это «смысл». Семантический тег своим названием говорит, что находится внутри. Раньше всё делали через <code>&lt;div&gt;</code>, и по коду было непонятно, где что. Теперь у каждой части страницы есть свой тег.</p>
+<p><b>Зачем это нужно:</b></p>
+<ul><li>код легче читать вам и другим программистам;</li><li>поисковики лучше понимают страницу;</li><li>программы для слабовидящих могут переходить по разделам;</li><li>в CSS будет проще оформлять каждую часть.</li></ul>
+<div class="lay" style="margin:12px 0">
+<div>&lt;header&gt; — шапка сайта (логотип, заголовок)</div>
+<div>&lt;nav&gt; — меню со ссылками</div>
+<div class="mid"><div>&lt;main&gt; → &lt;section&gt;, &lt;article&gt;<br>основное содержимое</div><div>&lt;aside&gt;<br>боковая панель</div></div>
+<div>&lt;footer&gt; — подвал (контакты, авторство)</div>
+</div>
+<table style="border-collapse:collapse;width:100%;font-size:.93rem">
+<tr><td><code>&lt;header&gt;</code></td><td>шапка страницы или раздела</td></tr>
+<tr><td><code>&lt;nav&gt;</code></td><td>блок навигации, меню</td></tr>
+<tr><td><code>&lt;main&gt;</code></td><td>главное содержимое, один на страницу</td></tr>
+<tr><td><code>&lt;section&gt;</code></td><td>тематический раздел, обычно с заголовком</td></tr>
+<tr><td><code>&lt;article&gt;</code></td><td>самостоятельный материал: новость, пост</td></tr>
+<tr><td><code>&lt;aside&gt;</code></td><td>дополнительное: реклама, ссылки сбоку</td></tr>
+<tr><td><code>&lt;footer&gt;</code></td><td>подвал страницы или раздела</td></tr>
+</table>
+<p class="hint">Семантические теги — блочные и сами по себе выглядят как обычный div. Их смысл — в названии, а красоту добавит CSS.</p>
+<pre>${esc(`<body>
+  <header>
+    <h1>Мой сайт</h1>
+    <nav><a href="#">Главная</a> <a href="#">Обо мне</a></nav>
+  </header>
+  <main>
+    <section>
+      <h2>Обо мне</h2>
+      <p>Меня зовут <b>Аня</b>.</p>
+    </section>
+  </main>
+  <footer><p>© 2026</p></footer>
+</body>`)}</pre>
+</div>`;
+
+/* ---------- ТЕСТ ---------- */
 const Q=[
-["Какой тег нужен, чтобы указать название вкладки браузера?",["<h1>","<title>","<head>","<name>"],1,"Название вкладки задаёт <title> внутри <head>."],
-["Что из этого — одиночный тег (без закрывающего)?",["<p>","<div>","<img>","<h1>"],2,"<img>, <br> и <hr> не имеют закрывающего тега."],
-["Какой атрибут задаёт адрес ссылки в теге <a>?",["src","href","alt","link"],1,"href — адрес, куда ведёт ссылка. src — у картинок."],
-["Для чего нужен атрибут alt у картинки?",["Размер картинки","Адрес картинки","Описание, если картинка не загрузилась","Рамка"],2,"alt — текстовое описание: его видно, если картинка не загрузилась, и читают программы для слабовидящих."],
-["Какой элемент строчный (идёт в строку с текстом)?",["<div>","<p>","<h2>","<span>"],3,"<span>, <a>, <strong>, <em> — строчные. <div>, <p>, <h1> — блочные."],
-["Как правильно сделать маркированный список?",["<ol><li>…</li></ol>","<ul><li>…</li></ul>","<list><item>…</item></list>","<ul><p>…</p></ul>"],1,"<ul> — маркированный, <ol> — нумерованный, пункты всегда в <li>."],
-["Какой атрибут лучше всего подходит, чтобы CSS мог «зацепиться» сразу за много элементов?",["id","class","href","title"],1,"class можно повторять у многих элементов, id должен быть уникальным."],
-["Что внутри чего находится в правильной структуре?",["<body> внутри <head>","<head> и <body> внутри <html>","<html> внутри <body>","<title> внутри <body>"],1,"<html> содержит <head> и <body>."],
-["Какой тег подходит для подвала сайта?",["<footer>","<bottom>","<end>","<foot>"],0,"Семантические теги: <header>, <nav>, <main>, <section>, <footer>."],
-["Где ошибка: <p>Привет, <strong>мир</p></strong>?",["Нет ошибки","Теги закрыты в неправильном порядке","Забыли атрибут","Лишний пробел"],1,"Теги вкладываются как матрёшка: что открыли последним — закрываем первым."]
+["Какой тег делает текст жирным?",["<i>","<b>","<u>","<sup>"],1,"<b> — жирный, <i> — курсив, <u> — подчёркнутый."],
+["Каким тегом выделяют курсивом?",["<i>","<b>","<br>","<p>"],0,"<i> — курсив."],
+["Как подчеркнуть слово?",["<sub>","<i>","<u>","<h1>"],2,"<u> — подчёркнутый текст."],
+["Как правильно записать формулу воды H₂O?",["H<sup>2</sup>O","H<sub>2</sub>O","H<b>2</b>O","H<br>2O"],1,"Нижний индекс — <sub>."],
+["Как записать «x в квадрате» (x²)?",["x<sub>2</sub>","x<i>2</i>","x<sup>2</sup>","x<u>2</u>"],2,"Верхний индекс (степень) — <sup>."],
+["Что делает тег <br>?",["Делает текст жирным","Переносит текст на новую строку","Создаёт абзац","Рисует кнопку"],1,"<br> — перенос строки. У него нет закрывающего тега."],
+["Какой заголовок самый главный (самый крупный)?",["<h6>","<h3>","<h1>","<head>"],2,"h1 — главный, h6 — самый мелкий."],
+["Сколько всего уровней заголовков в HTML?",["3","4","6","10"],2,"Шесть: от <h1> до <h6>."],
+["Каким тегом создаётся кнопка?",["<button>","<input>","<btn>","<click>"],0,"<button>Текст</button>."],
+["Какой тег нужен для обычного абзаца?",["<a>","<p>","<li>","<br>"],1,"<p> — paragraph, абзац."],
+["Как отобразится <p>Привет<br>мир</p>?",["В одну строку","В две строки: «Привет» и «мир»","Жирным шрифтом","Будет ошибка"],1,"После <br> текст идёт с новой строки, но абзац остаётся одним."],
+["Какой тег делает нумерованный список (1, 2, 3)?",["<ul>","<li>","<ol>","<nl>"],2,"<ol> — нумерованный, <ul> — маркированный."],
+["Что покажет <input type=\"color\">?",["Поле для текста","Выбор цвета","Кнопку","Картинку"],1,"type определяет вид поля: color — палитра цвета."],
+["Что значит «семантический тег»?",["Тег, который красиво оформляет текст","Тег, название которого говорит о смысле содержимого","Тег, который работает без закрывающего","Тег для картинок"],1,"Семантика — смысл. <footer> сразу понятно, что это подвал."],
+["Какой тег нужен для меню со ссылками на сайте?",["<menu-box>","<aside>","<nav>","<header>"],2,"<nav> — навигация."],
+["Сколько раз обычно используют <main> на странице?",["Один раз","Сколько угодно","Не используют","Ровно три"],0,"<main> — главное содержимое, он один на страницу."],
+["Что лучше использовать для подвала сайта?",["<div>","<footer>","<bottom>","<br>"],1,"<footer> — семантический тег подвала."],
+["Где ошибка: <p><b>Текст</p></b>?",["Нет ошибки","Теги закрыты в неправильном порядке","Забыли атрибут","Нужен <br>"],1,"Что открыли последним — закрываем первым: <p><b>Текст</b></p>."]
 ];
 let done=0,score=0;
-const qs=document.getElementById("qs");
-const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
 Q.forEach((q,i)=>{
  const d=document.createElement("div");d.className="card";
  d.innerHTML=`<p class="q">${i+1}. ${esc(q[0])}</p>`+q[1].map((o,j)=>`<button class="opt" data-j="${j}"><code>${esc(o)}</code></button>`).join("")+`<p class="exp hide"></p>`;
@@ -76,29 +135,31 @@ Q.forEach((q,i)=>{
   d.querySelectorAll(".opt")[q[2]].classList.add("ok");
   if(j===q[2])score++;else b.classList.add("bad");
   const e=d.querySelector(".exp");e.textContent=(j===q[2]?"Верно! ":"Не совсем. ")+q[3];e.classList.remove("hide");
-  done++;document.getElementById("pb").style.width=done/Q.length*100+"%";
-  if(done===Q.length){const r=document.getElementById("res");r.classList.remove("hide");
+  done++;$("pb").style.width=done/Q.length*100+"%";
+  if(done===Q.length){const r=$("res");r.classList.remove("hide");
    const p=score/Q.length;
-   r.innerHTML=`Результат: ${score} из ${Q.length}<br><span class="hint">${p>=.8?"Отлично! Можно переходить к CSS 🎉":p>=.5?"Неплохо, повторите ошибочные темы":"Стоит повторить основы HTML ещё раз"}</span><br><br><button class="btn" onclick="location.reload()">Пройти заново</button>`;
+   r.innerHTML=`Результат: ${score} из ${Q.length}<br><span class="hint">${p>=.8?"Отлично! Можно переходить к CSS 🎉":p>=.5?"Неплохо, повторите ошибочные темы":"Загляните во вкладку «Теория» и попробуйте ещё раз"}</span><br><br><button class="btn" onclick="location.reload()">Пройти заново</button>`;
    r.scrollIntoView({behavior:"smooth"});}
  });
- qs.appendChild(d);
+ $("qs").appendChild(d);
 });
 
+/* ---------- ПРАКТИКА ---------- */
 const T=[
-{t:"1. Скелет страницы",d:"Создай базовый скелет: doctype, html, head с title, body и заголовок h1.",
- s:"",c:[["<!DOCTYPE html> в начале","doctype"],["тег <title> с текстом","title",1,1],["тег <h1> в body","body h1"]]},
-{t:"2. Текст и список",d:"Добавь абзац <p>, в нём выдели слово через <strong> или <em>, и список <ul> минимум из 3 пунктов <li>.",
- s:"<h1>Мои хобби</h1>\n",c:[["абзац <p>","p"],["<strong> или <em>","strong, em"],["список <ul> из 3+ пунктов","ul li",3]]},
-{t:"3. Ссылка и картинка",d:"Добавь ссылку <a> с адресом (href) и картинку <img> с src и alt.",
- s:"<h1>Ссылки и картинки</h1>\n",c:[["ссылка <a> с href","a[href]"],["картинка <img> с src","img[src]"],["у картинки есть alt","img[alt]"]]},
-{t:"4. Блоки и структура",d:"Собери страницу из <header>, <main> и <footer>. Внутри main — <div class=\"...\"> и <span>.",
- s:"",c:[["<header>","header"],["<main>","main"],["<footer>","footer"],["<div> с атрибутом class","div[class]"],["<span>","span"]]},
-{t:"5. Финал: страница «О себе»",d:"Заголовок, картинка, абзац о себе, список хобби (3+), ссылка на любимый сайт и семантические теги.",
- s:"",c:[["заголовок <h1>","h1"],["картинка с alt","img[alt]"],["абзац <p>","p"],["список из 3+ пунктов","li",3],["ссылка с href","a[href]"],["<header> или <main> или <footer>","header, main, footer"]]}
+{t:"1. Скелет и заголовки",d:"Сделай скелет страницы с <title>. В body добавь заголовки h1, h2, h3 и два абзаца <p>.",
+ s:"",c:[["<!DOCTYPE html> в начале","doctype"],["<title> с текстом","title"],["заголовок <h1>","body h1"],["заголовок <h2>","body h2"],["заголовок <h3>","body h3"],["два абзаца <p>","p",2]]},
+{t:"2. Оформление текста: b, i, u",d:"Напиши абзац про себя. Одно слово сделай жирным, одно курсивом, одно подчёркнутым. А ещё одно слово — жирным и курсивом сразу.",
+ s:"<p>Меня зовут ... и я учусь в школе.</p>\n",c:[["<b>","b"],["<i>","i"],["<u>","u"],["вложенность: <i> внутри <b> (или наоборот)","b i, i b"]]},
+{t:"3. Индексы и перенос строки",d:"Исправь код: запиши формулу воды и квадрат числа правильно. Потом с помощью <br> раздели стихотворение на строки.",
+ s:"<p>Формула воды: H2O</p>\n<p>Площадь квадрата: a2</p>\n<p>Раз два три четыре пять мы идём гулять</p>\n",c:[["нижний индекс <sub>","sub"],["верхний индекс <sup>","sup"],["переносы строк <br> (минимум 2)","br",2]]},
+{t:"4. Кнопка, списки, ссылка и картинка",d:"Добавь кнопку, маркированный список из 3 пунктов, нумерованный список из 3 пунктов, ссылку, картинку и поле ввода с placeholder.",
+ s:"<h3>Мои любимые вещи</h3>\n",c:[["<button>","button"],["список <ul> из 3 <li>","ul li",3],["список <ol> из 3 <li>","ol li",3],["ссылка с href","a[href]"],["картинка с src","img[src]"],["<input> с placeholder","input[placeholder]"]]},
+{t:"5. Семантическая страница",d:"Собери страницу из семантических тегов: header (с h1 внутри), nav со ссылками, main с section и заголовком h2 внутри, footer с абзацем.",
+ s:"",c:[["<header>","header"],["<h1> внутри header","header h1"],["<nav> с 2+ ссылками","nav a[href]",2],["<main>","main"],["<section> внутри main","main section"],["<h2> внутри section","section h2"],["<footer> с абзацем","footer p"]]},
+{t:"6. Финал: моя визитка",d:"Собери всё вместе: header с h1 и nav, main с section, в нём абзац с b, i или u, формула с sub или sup, перенос br, список и кнопка, и footer.",
+ s:"",c:[["<header> и <nav>","header, nav",2],["<main> с <section>","main section"],["абзац <p>","section p"],["b, i или u","b, i, u"],["sub или sup","sub, sup"],["<br>","br"],["список из 3+ <li>","li",3],["<button>","button"],["<footer>","footer"]]}
 ];
-const P=document.getElementById("prac");
-T.forEach((k,i)=>{
+T.forEach(k=>{
  const d=document.createElement("div");d.className="card";
  d.innerHTML=`<p class="q">${k.t}</p><p>${esc(k.d)}</p><textarea spellcheck="false" placeholder="Пиши HTML здесь"></textarea>
  <div class="row"><button class="btn run">▶ Показать</button><button class="btn g chkb">✔ Проверить</button></div>
@@ -115,16 +176,20 @@ T.forEach((k,i)=>{
    let pass;
    if(c[1]==="doctype")pass=/^\s*<!doctype html>/i.test(ta.value);
    else if(c[1]==="title"){const t=doc.querySelector("title");pass=!!t&&t.textContent.trim().length>0;}
+   else if(c[1]==="header, nav")pass=!!doc.querySelector("header")&&!!doc.querySelector("nav");
    else pass=doc.querySelectorAll(c[1]).length>=(c[2]||1);
    if(pass)ok++;
    return `<li class="${pass?"ok":"bad"}">${esc(c[0])}</li>`;}).join("")
    +`<li class="hint">${ok===k.c.length?"🎉 Задание выполнено!":"Выполнено "+ok+" из "+k.c.length}</li>`;
  };
- P.appendChild(d);
+ $("prac").appendChild(d);
 });
-const a=document.getElementById("t1"),b=document.getElementById("t2");
-a.onclick=()=>{a.className="on";b.className="";test.classList.remove("hide");prac.classList.add("hide")};
-b.onclick=()=>{b.className="on";a.className="";prac.classList.remove("hide");test.classList.add("hide")};
+
+/* ---------- ВКЛАДКИ ---------- */
+const tabs=[["t0","theory"],["t1","test"],["t2","prac"]];
+tabs.forEach(([b,s])=>$(b).onclick=()=>tabs.forEach(([b2,s2])=>{
+ $(b2).className=b2===b?"on":"";$(s2).classList.toggle("hide",s2!==s);
+}));
 </script>
 </body>
 </html>
