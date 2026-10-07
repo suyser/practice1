@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Повторяем HTML</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1c2033;--mut:#667;--ac:#4f46e5;--ok:#16a34a;--bad:#dc2626;--bd:#dfe2ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12141f;--card:#1c1f2f;--tx:#eceefa;--mut:#9aa0bd;--ac:#8b85ff;--ok:#4ade80;--bad:#f87171;--bd:#2f3350}}
+:root[data-theme="dark"]{--bg:#12141f;--card:#1c1f2f;--tx:#eceefa;--mut:#9aa0bd;--ac:#8b85ff;--ok:#4ade80;--bad:#f87171;--bd:#2f3350}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.w{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+h1{margin:0 0 4px;font-size:1.7rem}
+.sub{color:var(--mut);margin:0 0 16px}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tabs button{flex:1;padding:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;font-weight:600;cursor:pointer}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:14px}
+.q{font-weight:600;margin:0 0 10px}
+.opt{display:block;width:100%;text-align:left;padding:9px 12px;margin:6px 0;border:1px solid var(--bd);background:transparent;color:var(--tx);border-radius:9px;font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ac)}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,transparent)}
+.exp{font-size:.92rem;color:var(--mut);margin:8px 0 0}
+code{background:color-mix(in srgb,var(--ac) 14%,transparent);padding:1px 5px;border-radius:5px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+.res{text-align:center;font-size:1.2rem;font-weight:700}
+.btn{padding:10px 16px;border:0;border-radius:10px;background:var(--ac);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.btn.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+textarea{width:100%;height:210px;border:1px solid var(--bd);border-radius:10px;padding:10px;background:var(--bg);color:var(--tx);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+iframe{width:100%;height:170px;border:1px solid var(--bd);border-radius:10px;background:#fff}
+.row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
+.chk{list-style:none;padding:0;margin:8px 0}
+.chk li{padding:3px 0}
+.chk li.ok::before{content:"✅ "}
+.chk li.bad::before{content:"⬜ "}
+.hint{font-size:.9rem;color:var(--mut)}
+.hide{display:none}
+.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>Повторяем HTML 🚀</h1>
+<p class="sub">Тест и практика перед переходом к CSS</p>
+<div class="tabs"><button id="t1" class="on">📝 Мини-тест</button><button id="t2">💻 Практика</button></div>
+
+<section id="test"><div class="bar"><i id="pb"></i></div><div id="qs"></div><div id="res" class="card res hide"></div></section>
+<section id="prac" class="hide"></section>
+</div>
+
+<script>
+const Q=[
+["Какой тег нужен, чтобы указать название вкладки браузера?",["<h1>","<title>","<head>","<name>"],1,"Название вкладки задаёт <title> внутри <head>."],
+["Что из этого — одиночный тег (без закрывающего)?",["<p>","<div>","<img>","<h1>"],2,"<img>, <br> и <hr> не имеют закрывающего тега."],
+["Какой атрибут задаёт адрес ссылки в теге <a>?",["src","href","alt","link"],1,"href — адрес, куда ведёт ссылка. src — у картинок."],
+["Для чего нужен атрибут alt у картинки?",["Размер картинки","Адрес картинки","Описание, если картинка не загрузилась","Рамка"],2,"alt — текстовое описание: его видно, если картинка не загрузилась, и читают программы для слабовидящих."],
+["Какой элемент строчный (идёт в строку с текстом)?",["<div>","<p>","<h2>","<span>"],3,"<span>, <a>, <strong>, <em> — строчные. <div>, <p>, <h1> — блочные."],
+["Как правильно сделать маркированный список?",["<ol><li>…</li></ol>","<ul><li>…</li></ul>","<list><item>…</item></list>","<ul><p>…</p></ul>"],1,"<ul> — маркированный, <ol> — нумерованный, пункты всегда в <li>."],
+["Какой атрибут лучше всего подходит, чтобы CSS мог «зацепиться» сразу за много элементов?",["id","class","href","title"],1,"class можно повторять у многих элементов, id должен быть уникальным."],
+["Что внутри чего находится в правильной структуре?",["<body> внутри <head>","<head> и <body> внутри <html>","<html> внутри <body>","<title> внутри <body>"],1,"<html> содержит <head> и <body>."],
+["Какой тег подходит для подвала сайта?",["<footer>","<bottom>","<end>","<foot>"],0,"Семантические теги: <header>, <nav>, <main>, <section>, <footer>."],
+["Где ошибка: <p>Привет, <strong>мир</p></strong>?",["Нет ошибки","Теги закрыты в неправильном порядке","Забыли атрибут","Лишний пробел"],1,"Теги вкладываются как матрёшка: что открыли последним — закрываем первым."]
+];
+let done=0,score=0;
+const qs=document.getElementById("qs");
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+Q.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="card";
+ d.innerHTML=`<p class="q">${i+1}. ${esc(q[0])}</p>`+q[1].map((o,j)=>`<button class="opt" data-j="${j}"><code>${esc(o)}</code></button>`).join("")+`<p class="exp hide"></p>`;
+ d.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+  const j=+b.dataset.j;
+  d.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+  d.querySelectorAll(".opt")[q[2]].classList.add("ok");
+  if(j===q[2])score++;else b.classList.add("bad");
+  const e=d.querySelector(".exp");e.textContent=(j===q[2]?"Верно! ":"Не совсем. ")+q[3];e.classList.remove("hide");
+  done++;document.getElementById("pb").style.width=done/Q.length*100+"%";
+  if(done===Q.length){const r=document.getElementById("res");r.classList.remove("hide");
+   const p=score/Q.length;
+   r.innerHTML=`Результат: ${score} из ${Q.length}<br><span class="hint">${p>=.8?"Отлично! Можно переходить к CSS 🎉":p>=.5?"Неплохо, повторите ошибочные темы":"Стоит повторить основы HTML ещё раз"}</span><br><br><button class="btn" onclick="location.reload()">Пройти заново</button>`;
+   r.scrollIntoView({behavior:"smooth"});}
+ });
+ qs.appendChild(d);
+});
+
+const T=[
+{t:"1. Скелет страницы",d:"Создай базовый скелет: doctype, html, head с title, body и заголовок h1.",
+ s:"",c:[["<!DOCTYPE html> в начале","doctype"],["тег <title> с текстом","title",1,1],["тег <h1> в body","body h1"]]},
+{t:"2. Текст и список",d:"Добавь абзац <p>, в нём выдели слово через <strong> или <em>, и список <ul> минимум из 3 пунктов <li>.",
+ s:"<h1>Мои хобби</h1>\n",c:[["абзац <p>","p"],["<strong> или <em>","strong, em"],["список <ul> из 3+ пунктов","ul li",3]]},
+{t:"3. Ссылка и картинка",d:"Добавь ссылку <a> с адресом (href) и картинку <img> с src и alt.",
+ s:"<h1>Ссылки и картинки</h1>\n",c:[["ссылка <a> с href","a[href]"],["картинка <img> с src","img[src]"],["у картинки есть alt","img[alt]"]]},
+{t:"4. Блоки и структура",d:"Собери страницу из <header>, <main> и <footer>. Внутри main — <div class=\"...\"> и <span>.",
+ s:"",c:[["<header>","header"],["<main>","main"],["<footer>","footer"],["<div> с атрибутом class","div[class]"],["<span>","span"]]},
+{t:"5. Финал: страница «О себе»",d:"Заголовок, картинка, абзац о себе, список хобби (3+), ссылка на любимый сайт и семантические теги.",
+ s:"",c:[["заголовок <h1>","h1"],["картинка с alt","img[alt]"],["абзац <p>","p"],["список из 3+ пунктов","li",3],["ссылка с href","a[href]"],["<header> или <main> или <footer>","header, main, footer"]]}
+];
+const P=document.getElementById("prac");
+T.forEach((k,i)=>{
+ const d=document.createElement("div");d.className="card";
+ d.innerHTML=`<p class="q">${k.t}</p><p>${esc(k.d)}</p><textarea spellcheck="false" placeholder="Пиши HTML здесь"></textarea>
+ <div class="row"><button class="btn run">▶ Показать</button><button class="btn g chkb">✔ Проверить</button></div>
+ <iframe sandbox></iframe><ul class="chk"></ul>`;
+ const ta=d.querySelector("textarea"),fr=d.querySelector("iframe"),ul=d.querySelector(".chk");
+ ta.value=k.s;
+ const run=()=>fr.srcdoc=ta.value;
+ d.querySelector(".run").onclick=run;
+ d.querySelector(".chkb").onclick=()=>{
+  run();
+  const doc=new DOMParser().parseFromString(ta.value,"text/html");
+  let ok=0;
+  ul.innerHTML=k.c.map(c=>{
+   let pass;
+   if(c[1]==="doctype")pass=/^\s*<!doctype html>/i.test(ta.value);
+   else if(c[1]==="title"){const t=doc.querySelector("title");pass=!!t&&t.textContent.trim().length>0;}
+   else pass=doc.querySelectorAll(c[1]).length>=(c[2]||1);
+   if(pass)ok++;
+   return `<li class="${pass?"ok":"bad"}">${esc(c[0])}</li>`;}).join("")
+   +`<li class="hint">${ok===k.c.length?"🎉 Задание выполнено!":"Выполнено "+ok+" из "+k.c.length}</li>`;
+ };
+ P.appendChild(d);
+});
+const a=document.getElementById("t1"),b=document.getElementById("t2");
+a.onclick=()=>{a.className="on";b.className="";test.classList.remove("hide");prac.classList.add("hide")};
+b.onclick=()=>{b.className="on";a.className="";prac.classList.remove("hide");test.classList.add("hide")};
+</script>
+</body>
+</html>
